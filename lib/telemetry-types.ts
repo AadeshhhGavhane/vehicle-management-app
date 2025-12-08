@@ -70,12 +70,14 @@ export const THRESHOLDS = {
   bikeEngineHealth: { good: 70, average: 40 },
   bikeFuelLevelPercent: { good: 50, average: 20 },
   bikeChainHealth: { good: 70, average: 40 },
+  bikeEngineTempC: { good: 80, average: 95 }, // Lower is better, inverted
   // Scooter specific
   scooterBatteryHealth: { good: 70, average: 40 },
   scooterStateOfChargePercent: { good: 50, average: 20 },
   scooterRangeKm: { good: 50, average: 25 },
   scooterEngineHealth: { good: 70, average: 40 },
   scooterFuelLevelPercent: { good: 50, average: 20 },
+  scooterEngineTempC: { good: 80, average: 95 }, // Lower is better, inverted
 }
 
 // Preset values for each vehicle type
@@ -189,7 +191,7 @@ export function getHealthLevel(metric: keyof typeof THRESHOLDS, value: number): 
   const threshold = THRESHOLDS[metric]
 
   // Special case for engine temperature (lower is better)
-  if (metric === "carEngineTempC") {
+  if (metric === "carEngineTempC" || metric === "bikeEngineTempC" || metric === "scooterEngineTempC") {
     if (value <= threshold.good) return "good"
     if (value <= threshold.average) return "average"
     return "bad"
@@ -232,5 +234,16 @@ export function getHealthBgColor(level: HealthLevel): string {
       return "bg-yellow-50 dark:bg-yellow-950/30"
     case "bad":
       return "bg-red-50 dark:bg-red-950/30"
+  }
+}
+
+export function getHealthSliderColor(level: HealthLevel): string {
+  switch (level) {
+    case "good":
+      return "[&_[data-slot=slider-range]]:bg-green-500 dark:[&_[data-slot=slider-range]]:bg-green-400 [&_[data-slot=slider-thumb]]:border-green-500 dark:[&_[data-slot=slider-thumb]]:border-green-400 [&_[data-slot=slider-thumb]]:bg-white dark:[&_[data-slot=slider-thumb]]:bg-background"
+    case "average":
+      return "[&_[data-slot=slider-range]]:bg-yellow-500 dark:[&_[data-slot=slider-range]]:bg-yellow-400 [&_[data-slot=slider-thumb]]:border-yellow-500 dark:[&_[data-slot=slider-thumb]]:border-yellow-400 [&_[data-slot=slider-thumb]]:bg-white dark:[&_[data-slot=slider-thumb]]:bg-background"
+    case "bad":
+      return "[&_[data-slot=slider-range]]:bg-red-500 dark:[&_[data-slot=slider-range]]:bg-red-400 [&_[data-slot=slider-thumb]]:border-red-500 dark:[&_[data-slot=slider-thumb]]:border-red-400 [&_[data-slot=slider-thumb]]:bg-white dark:[&_[data-slot=slider-thumb]]:bg-background"
   }
 }

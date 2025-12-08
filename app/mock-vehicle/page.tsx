@@ -16,6 +16,7 @@ import {
   getHealthLevel,
   getHealthBorderColor,
   getHealthBgColor,
+  getHealthSliderColor,
   type VehicleType,
   type PresetType,
   type TelemetryPayload,
@@ -351,7 +352,7 @@ export default function MockVehiclePage() {
           min={min}
           max={max}
           step={1}
-          className="w-full"
+          className={`w-full ${getHealthSliderColor(level)}`}
         />
       </div>
     )
@@ -652,7 +653,7 @@ export default function MockVehiclePage() {
                     label="Engine Temperature"
                     value={bikeEngineTempC}
                     onChange={setBikeEngineTempC}
-                    metricKey="carEngineTempC"
+                    metricKey="bikeEngineTempC"
                     unit="°C"
                     max={150}
                   />
@@ -706,7 +707,7 @@ export default function MockVehiclePage() {
                     label="Engine Temperature"
                     value={scooterEngineTempC}
                     onChange={setScooterEngineTempC}
-                    metricKey="carEngineTempC"
+                    metricKey="scooterEngineTempC"
                     unit="°C"
                     max={150}
                   />

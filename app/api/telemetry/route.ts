@@ -87,6 +87,12 @@ export async function POST(request: NextRequest) {
       RETURNING id, unique_code, type, status, lat, lng, label, health, last_telemetry_at
     `
 
+    // Insert into telemetry_logs for history
+    await sql`
+      INSERT INTO telemetry_logs (vehicle_id, status, lat, lng, label, health_data)
+      VALUES (${result[0].id}, ${status || "off"}, ${lat || null}, ${lng || null}, ${label || null}, ${JSON.stringify(healthWithCondition)})
+    `
+
     const updatedVehicle = {
       id: result[0].id,
       code: result[0].unique_code,
