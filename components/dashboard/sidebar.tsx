@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { useAuth } from "@/contexts/auth-context"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
-import { Car, User, PlusCircle, List, LayoutDashboard, LogOut, FileText, Wrench } from "lucide-react"
+import { Car, User, PlusCircle, List, LayoutDashboard, LogOut, FileText, Wrench, Phone } from "lucide-react"
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -14,6 +14,7 @@ const navItems = [
   { href: "/dashboard/vehicles", label: "View Vehicles", icon: List },
   { href: "/dashboard/logs", label: "Logs", icon: FileText },
   { href: "/dashboard/service-centers", label: "Services", icon: Wrench },
+  { href: "/dashboard/voice-chat", label: "Voice Chat", icon: Phone },
 ]
 
 export function Sidebar() {
