@@ -16,6 +16,10 @@ export interface Vehicle {
   uniqueCode: string
   createdAt: string
   health: VehicleHealth
+  lat?: number | null
+  lng?: number | null
+  label?: string | null
+  status?: string | null
 }
 
 export interface VehicleHealth {
@@ -29,6 +33,7 @@ export interface VehicleHealth {
   isActive: boolean
   location: string
   condition?: ConditionResult
+  telemetry?: Record<string, any> // Raw telemetry data from mock vehicle
 }
 
 export type ConditionStatus = "good" | "warning" | "bad"

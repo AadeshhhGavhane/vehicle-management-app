@@ -1,4 +1,4 @@
-import { sql } from "./db"
+  import { sql } from "./db"
 import type { Vehicle, VehicleHealth } from "./types"
 import { generateRandomHealth } from "./vehicle-health"
 
@@ -22,6 +22,10 @@ function mapRowToVehicle(row: any): Vehicle {
     uniqueCode: row.unique_code,
     createdAt: row.created_at,
     health: row.health as VehicleHealth,
+    lat: row.lat ? Number(row.lat) : null,
+    lng: row.lng ? Number(row.lng) : null,
+    label: row.label || null,
+    status: row.status || null,
   }
 }
 
