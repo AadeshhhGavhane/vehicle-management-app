@@ -3,7 +3,9 @@
 import type { Vehicle } from "@/lib/types"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Car, Bike, Zap } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
+import { Car, Bike, Zap, Wrench } from "lucide-react"
 
 interface VehicleHealthModalProps {
   vehicle: Vehicle | null
@@ -11,6 +13,7 @@ interface VehicleHealthModalProps {
 }
 
 export function VehicleHealthModal({ vehicle, onClose }: VehicleHealthModalProps) {
+  const router = useRouter()
   if (!vehicle) return null
 
   const condition =
@@ -20,6 +23,45 @@ export function VehicleHealthModal({ vehicle, onClose }: VehicleHealthModalProps
       problematicMetrics: [],
     } as const)
   const VehicleIcon = vehicle.type === "car" ? Car : vehicle.type === "bike" ? Bike : Zap
+
+  // Determine recommended service type based on issues
+  const getRecommendedServiceType = (): string => {
+    const issues = condition.problematicMetrics.map((m) => m.name.toLowerCase())
+    
+    // Check for fuel-related issues
+    if (issues.some((i) => i.includes("fuel"))) {
+      return "fuel_stations"
+    }
+    
+    // Check for engine/battery/chain issues (needs service center)
+    if (
+      issues.some((i) => i.includes("engine") || i.includes("battery") || i.includes("chain"))
+    ) {
+      return "service_centers"
+    }
+    
+    // Check for tire/tyre/brake issues (needs garage)
+    if (issues.some((i) => i.includes("tire") || i.includes("tyre") || i.includes("brake"))) {
+      return "garages"
+    }
+    
+    // Default to service centers for any other issues
+    return "service_centers"
+  }
+
+  const handleFindServices = () => {
+    const recommendedTab = getRecommendedServiceType()
+    const city = vehicle.health?.location || ""
+    const params = new URLSearchParams({
+      vehicleId: vehicle.id,
+      tab: recommendedTab,
+    })
+    if (city) {
+      params.append("city", city)
+    }
+    router.push(`/dashboard/service-centers?${params.toString()}`)
+    onClose()
+  }
 
   const healthMetrics = [
     { key: "engineTemperature", label: "Engine Temperature", value: vehicle.health.engineTemperature, unit: "°C" },
@@ -135,6 +177,16 @@ export function VehicleHealthModal({ vehicle, onClose }: VehicleHealthModalProps
                   </div>
                 ))}
               </div>
+              {(condition.overall === "warning" || condition.overall === "bad") && (
+                <Button
+                  onClick={handleFindServices}
+                  className="w-full mt-4"
+                  variant={condition.overall === "bad" ? "default" : "outline"}
+                >
+                  <Wrench className="h-4 w-4 mr-2" />
+                  Find Nearby Services
+                </Button>
+              )}
             </div>
           )}
 

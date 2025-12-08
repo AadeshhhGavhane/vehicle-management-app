@@ -6,13 +6,14 @@ import { cn } from "@/lib/utils"
 import { useAuth } from "@/contexts/auth-context"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
-import { Car, User, PlusCircle, List, LayoutDashboard, LogOut, FileText } from "lucide-react"
+import { Car, User, PlusCircle, List, LayoutDashboard, LogOut, FileText, Wrench } from "lucide-react"
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/add-vehicle", label: "Add Vehicle", icon: PlusCircle },
   { href: "/dashboard/vehicles", label: "View Vehicles", icon: List },
   { href: "/dashboard/logs", label: "Logs", icon: FileText },
+  { href: "/dashboard/service-centers", label: "Services", icon: Wrench },
 ]
 
 export function Sidebar() {

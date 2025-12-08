@@ -1,0 +1,1112 @@
+[
+  {
+    "city": "Mumbai",
+    "latitude": 19.076,
+    "longitude": 72.8777,
+    "service_centers": [
+      {
+        "name": "Suzuki Andheri Service",
+        "lat": 19.090493,
+        "lng": 72.862394
+      },
+      {
+        "name": "Bajaj Borivali Service",
+        "lat": 19.05215,
+        "lng": 72.89214
+      },
+      {
+        "name": "Maruti Andheri Service",
+        "lat": 19.08143,
+        "lng": 72.849607
+      },
+      {
+        "name": "Suzuki Bandra Service",
+        "lat": 19.05996,
+        "lng": 72.883821
+      },
+      {
+        "name": "Maruti Bandra Service",
+        "lat": 19.088961,
+        "lng": 72.889779
+      }
+    ],
+    "garages": [
+      {
+        "name": "Shell Bandra Garage",
+        "lat": 19.072953,
+        "lng": 72.864391
+      },
+      {
+        "name": "Motul Andheri Garage",
+        "lat": 19.091528,
+        "lng": 72.85728
+      },
+      {
+        "name": "Shell Dadar Garage",
+        "lat": 19.062672,
+        "lng": 72.860619
+      },
+      {
+        "name": "Motul Dadar Garage",
+        "lat": 19.052133,
+        "lng": 72.870496
+      },
+      {
+        "name": "Bosch Powai Garage",
+        "lat": 19.066637,
+        "lng": 72.863571
+      }
+    ],
+    "fuel_stations": [
+      {
+        "name": "Indian Oil Borivali Fuel Station",
+        "lat": 19.073565,
+        "lng": 72.85519,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Indian Oil Thane Fuel Station",
+        "lat": 19.063591,
+        "lng": 72.885418,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "HP Thane Fuel Station",
+        "lat": 19.057537,
+        "lng": 72.851873,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "HP Andheri Fuel Station",
+        "lat": 19.097319,
+        "lng": 72.899689,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Shell Borivali Fuel Station",
+        "lat": 19.096047,
+        "lng": 72.857459,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      }
+    ]
+  },
+  {
+    "city": "Delhi",
+    "latitude": 28.7041,
+    "longitude": 77.1025,
+    "service_centers": [
+      {
+        "name": "TVS Saket Service",
+        "lat": 28.730299,
+        "lng": 77.111382
+      },
+      {
+        "name": "Bajaj Mayur Vihar Service",
+        "lat": 28.717848,
+        "lng": 77.082304
+      },
+      {
+        "name": "Tata Karol Bagh Service",
+        "lat": 28.733471,
+        "lng": 77.1109
+      },
+      {
+        "name": "Maruti Dwarka Service",
+        "lat": 28.715177,
+        "lng": 77.123071
+      },
+      {
+        "name": "Honda Dwarka Service",
+        "lat": 28.723408,
+        "lng": 77.120803
+      }
+    ],
+    "garages": [
+      {
+        "name": "Shell Karol Bagh Garage",
+        "lat": 28.678071,
+        "lng": 77.127288
+      },
+      {
+        "name": "TVS Saket Garage",
+        "lat": 28.692981,
+        "lng": 77.111826
+      },
+      {
+        "name": "Shell Saket Garage",
+        "lat": 28.701631,
+        "lng": 77.088393
+      },
+      {
+        "name": "Mobil Saket Garage",
+        "lat": 28.707782,
+        "lng": 77.088264
+      },
+      {
+        "name": "TVS Lajpat Nagar Garage",
+        "lat": 28.727969,
+        "lng": 77.096464
+      }
+    ],
+    "fuel_stations": [
+      {
+        "name": "BPCL Dwarka Fuel Station",
+        "lat": 28.704672,
+        "lng": 77.077955,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Indian Oil Dwarka Fuel Station",
+        "lat": 28.711747,
+        "lng": 77.120025,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Indian Oil Lajpat Nagar Fuel Station",
+        "lat": 28.696997,
+        "lng": 77.132267,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Reliance Shahdara Fuel Station",
+        "lat": 28.730646,
+        "lng": 77.113317,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Reliance Shahdara Fuel Station",
+        "lat": 28.69011,
+        "lng": 77.110958,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      }
+    ]
+  },
+  {
+    "city": "Bengaluru",
+    "latitude": 12.9716,
+    "longitude": 77.5946,
+    "service_centers": [
+      {
+        "name": "Tata Whitefield Service",
+        "lat": 12.968823,
+        "lng": 77.621829
+      },
+      {
+        "name": "TVS Marathahalli Service",
+        "lat": 12.987318,
+        "lng": 77.595061
+      },
+      {
+        "name": "Suzuki BTM Layout Service",
+        "lat": 12.959507,
+        "lng": 77.602937
+      },
+      {
+        "name": "Yamaha Whitefield Service",
+        "lat": 12.964035,
+        "lng": 77.574293
+      },
+      {
+        "name": "Maruti Koramangala Service",
+        "lat": 12.977537,
+        "lng": 77.593916
+      }
+    ],
+    "garages": [
+      {
+        "name": "Castrol Jayanagar Garage",
+        "lat": 12.994323,
+        "lng": 77.6145
+      },
+      {
+        "name": "Bosch Whitefield Garage",
+        "lat": 12.945076,
+        "lng": 77.617281
+      },
+      {
+        "name": "Castrol Koramangala Garage",
+        "lat": 12.985514,
+        "lng": 77.613561
+      },
+      {
+        "name": "Motul Marathahalli Garage",
+        "lat": 12.98755,
+        "lng": 77.572303
+      },
+      {
+        "name": "Shell Marathahalli Garage",
+        "lat": 12.951508,
+        "lng": 77.59626
+      }
+    ],
+    "fuel_stations": [
+      {
+        "name": "Reliance Yelahanka Fuel Station",
+        "lat": 12.999462,
+        "lng": 77.620335,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Nayara Whitefield Fuel Station",
+        "lat": 12.984377,
+        "lng": 77.58854,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "HP Yelahanka Fuel Station",
+        "lat": 12.995577,
+        "lng": 77.591689,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Indian Oil Jayanagar Fuel Station",
+        "lat": 12.942862,
+        "lng": 77.597835,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Indian Oil Koramangala Fuel Station",
+        "lat": 12.98407,
+        "lng": 77.568132,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      }
+    ]
+  },
+  {
+    "city": "Hyderabad",
+    "latitude": 17.385,
+    "longitude": 78.4867,
+    "service_centers": [
+      {
+        "name": "Honda Banjara Hills Service",
+        "lat": 17.359251,
+        "lng": 78.47098
+      },
+      {
+        "name": "Mahindra Secunderabad Service",
+        "lat": 17.387354,
+        "lng": 78.500101
+      },
+      {
+        "name": "Mahindra Secunderabad Service",
+        "lat": 17.402077,
+        "lng": 78.50515
+      },
+      {
+        "name": "Yamaha Hitech City Service",
+        "lat": 17.360816,
+        "lng": 78.482563
+      },
+      {
+        "name": "Tata Kukatpally Service",
+        "lat": 17.383021,
+        "lng": 78.500445
+      }
+    ],
+    "garages": [
+      {
+        "name": "Mahindra Madhapur Garage",
+        "lat": 17.41405,
+        "lng": 78.462605
+      },
+      {
+        "name": "Shell Madhapur Garage",
+        "lat": 17.375358,
+        "lng": 78.5084
+      },
+      {
+        "name": "Mobil Secunderabad Garage",
+        "lat": 17.366413,
+        "lng": 78.483617
+      },
+      {
+        "name": "Shell Secunderabad Garage",
+        "lat": 17.371713,
+        "lng": 78.471688
+      },
+      {
+        "name": "Castrol Kukatpally Garage",
+        "lat": 17.403481,
+        "lng": 78.508058
+      }
+    ],
+    "fuel_stations": [
+      {
+        "name": "Indian Oil Hitech City Fuel Station",
+        "lat": 17.394129,
+        "lng": 78.489135,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Indian Oil Secunderabad Fuel Station",
+        "lat": 17.364979,
+        "lng": 78.485838,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Shell Hitech City Fuel Station",
+        "lat": 17.364878,
+        "lng": 78.456829,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Shell Banjara Hills Fuel Station",
+        "lat": 17.38038,
+        "lng": 78.514139,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Reliance Madhapur Fuel Station",
+        "lat": 17.398104,
+        "lng": 78.465988,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      }
+    ]
+  },
+  {
+    "city": "Chennai",
+    "latitude": 13.0827,
+    "longitude": 80.2707,
+    "service_centers": [
+      {
+        "name": "Honda OMR Service",
+        "lat": 13.096844,
+        "lng": 80.244357
+      },
+      {
+        "name": "Hyundai T Nagar Service",
+        "lat": 13.055709,
+        "lng": 80.269307
+      },
+      {
+        "name": "Maruti Velachery Service",
+        "lat": 13.056113,
+        "lng": 80.27117
+      },
+      {
+        "name": "Bajaj T Nagar Service",
+        "lat": 13.088402,
+        "lng": 80.281213
+      },
+      {
+        "name": "Yamaha Anna Nagar Service",
+        "lat": 13.059893,
+        "lng": 80.294117
+      }
+    ],
+    "garages": [
+      {
+        "name": "Mobil OMR Garage",
+        "lat": 13.088371,
+        "lng": 80.277863
+      },
+      {
+        "name": "Shell Kodambakkam Garage",
+        "lat": 13.08772,
+        "lng": 80.272067
+      },
+      {
+        "name": "Bosch Velachery Garage",
+        "lat": 13.092884,
+        "lng": 80.259551
+      },
+      {
+        "name": "Bosch Anna Nagar Garage",
+        "lat": 13.060553,
+        "lng": 80.27943
+      },
+      {
+        "name": "Shell Adyar Garage",
+        "lat": 13.108441,
+        "lng": 80.296844
+      }
+    ],
+    "fuel_stations": [
+      {
+        "name": "Indian Oil Anna Nagar Fuel Station",
+        "lat": 13.08997,
+        "lng": 80.27448,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Reliance Velachery Fuel Station",
+        "lat": 13.083053,
+        "lng": 80.248647,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Indian Oil Velachery Fuel Station",
+        "lat": 13.074872,
+        "lng": 80.250165,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Nayara Adyar Fuel Station",
+        "lat": 13.089401,
+        "lng": 80.299934,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Indian Oil Kodambakkam Fuel Station",
+        "lat": 13.101726,
+        "lng": 80.258663,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      }
+    ]
+  },
+  {
+    "city": "Kolkata",
+    "latitude": 22.5726,
+    "longitude": 88.3639,
+    "service_centers": [
+      {
+        "name": "Bajaj Howrah Service",
+        "lat": 22.549526,
+        "lng": 88.340322
+      },
+      {
+        "name": "Maruti Park Street Service",
+        "lat": 22.558941,
+        "lng": 88.37019
+      },
+      {
+        "name": "Hyundai Park Street Service",
+        "lat": 22.58385,
+        "lng": 88.385075
+      },
+      {
+        "name": "Maruti New Town Service",
+        "lat": 22.557667,
+        "lng": 88.38839
+      },
+      {
+        "name": "Honda Salt Lake Service",
+        "lat": 22.580657,
+        "lng": 88.383661
+      }
+    ],
+    "garages": [
+      {
+        "name": "Castrol Salt Lake Garage",
+        "lat": 22.562613,
+        "lng": 88.341749
+      },
+      {
+        "name": "Bosch Park Street Garage",
+        "lat": 22.587074,
+        "lng": 88.367001
+      },
+      {
+        "name": "Shell Behala Garage",
+        "lat": 22.54318,
+        "lng": 88.338415
+      },
+      {
+        "name": "Mahindra Park Street Garage",
+        "lat": 22.575335,
+        "lng": 88.383976
+      },
+      {
+        "name": "TVS Behala Garage",
+        "lat": 22.551486,
+        "lng": 88.341547
+      }
+    ],
+    "fuel_stations": [
+      {
+        "name": "HP Howrah Fuel Station",
+        "lat": 22.596539,
+        "lng": 88.381667,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "HP Park Street Fuel Station",
+        "lat": 22.583524,
+        "lng": 88.373916,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Reliance New Town Fuel Station",
+        "lat": 22.60103,
+        "lng": 88.378869,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "BPCL Park Street Fuel Station",
+        "lat": 22.601172,
+        "lng": 88.382546,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Indian Oil Park Street Fuel Station",
+        "lat": 22.586794,
+        "lng": 88.353831,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      }
+    ]
+  },
+  {
+    "city": "Pune",
+    "latitude": 18.5204,
+    "longitude": 73.8567,
+    "service_centers": [
+      {
+        "name": "Yamaha Kharadi Service",
+        "lat": 18.499952,
+        "lng": 73.868777
+      },
+      {
+        "name": "Tata Kothrud Service",
+        "lat": 18.541916,
+        "lng": 73.840046
+      },
+      {
+        "name": "Mahindra Kharadi Service",
+        "lat": 18.508711,
+        "lng": 73.874421
+      },
+      {
+        "name": "Yamaha Hinjewadi Service",
+        "lat": 18.49182,
+        "lng": 73.838288
+      },
+      {
+        "name": "Hyundai Kharadi Service",
+        "lat": 18.542261,
+        "lng": 73.884713
+      }
+    ],
+    "garages": [
+      {
+        "name": "Bosch Kharadi Garage",
+        "lat": 18.528889,
+        "lng": 73.850681
+      },
+      {
+        "name": "Motul Hadapsar Garage",
+        "lat": 18.510269,
+        "lng": 73.828356
+      },
+      {
+        "name": "Bosch Hinjewadi Garage",
+        "lat": 18.525235,
+        "lng": 73.885713
+      },
+      {
+        "name": "Castrol Kothrud Garage",
+        "lat": 18.526194,
+        "lng": 73.847441
+      },
+      {
+        "name": "Motul Kharadi Garage",
+        "lat": 18.516584,
+        "lng": 73.885754
+      }
+    ],
+    "fuel_stations": [
+      {
+        "name": "Indian Oil Viman Nagar Fuel Station",
+        "lat": 18.54437,
+        "lng": 73.838105,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Shell Kothrud Fuel Station",
+        "lat": 18.521595,
+        "lng": 73.875091,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Nayara Wakad Fuel Station",
+        "lat": 18.530638,
+        "lng": 73.848553,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Nayara Kharadi Fuel Station",
+        "lat": 18.527789,
+        "lng": 73.866503,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "HP Hadapsar Fuel Station",
+        "lat": 18.508957,
+        "lng": 73.851204,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      }
+    ]
+  },
+  {
+    "city": "Ahmedabad",
+    "latitude": 23.0225,
+    "longitude": 72.5714,
+    "service_centers": [
+      {
+        "name": "TVS Gota Service",
+        "lat": 23.000137,
+        "lng": 72.566627
+      },
+      {
+        "name": "Tata Thaltej Service",
+        "lat": 23.037388,
+        "lng": 72.551842
+      },
+      {
+        "name": "TVS Bopal Service",
+        "lat": 23.025376,
+        "lng": 72.541424
+      },
+      {
+        "name": "TVS SG Highway Service",
+        "lat": 23.018293,
+        "lng": 72.576199
+      },
+      {
+        "name": "Hyundai Bopal Service",
+        "lat": 23.019007,
+        "lng": 72.581938
+      }
+    ],
+    "garages": [
+      {
+        "name": "TVS Bopal Garage",
+        "lat": 23.040124,
+        "lng": 72.59899
+      },
+      {
+        "name": "Mahindra SG Highway Garage",
+        "lat": 23.032031,
+        "lng": 72.558427
+      },
+      {
+        "name": "Mahindra Thaltej Garage",
+        "lat": 23.029656,
+        "lng": 72.547003
+      },
+      {
+        "name": "Motul SG Highway Garage",
+        "lat": 23.032868,
+        "lng": 72.554878
+      },
+      {
+        "name": "Mobil SG Highway Garage",
+        "lat": 22.993966,
+        "lng": 72.556091
+      }
+    ],
+    "fuel_stations": [
+      {
+        "name": "Shell Gota Fuel Station",
+        "lat": 23.043484,
+        "lng": 72.54577,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Nayara Gota Fuel Station",
+        "lat": 23.004166,
+        "lng": 72.583181,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "BPCL SG Highway Fuel Station",
+        "lat": 23.031863,
+        "lng": 72.541733,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Indian Oil Bopal Fuel Station",
+        "lat": 23.00563,
+        "lng": 72.589647,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Shell Navrangpura Fuel Station",
+        "lat": 23.025944,
+        "lng": 72.596448,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      }
+    ]
+  },
+  {
+    "city": "Jaipur",
+    "latitude": 26.9124,
+    "longitude": 75.7873,
+    "service_centers": [
+      {
+        "name": "Bajaj Mansarovar Service",
+        "lat": 26.922455,
+        "lng": 75.816574
+      },
+      {
+        "name": "Hyundai Mansarovar Service",
+        "lat": 26.919159,
+        "lng": 75.800456
+      },
+      {
+        "name": "Maruti Mansarovar Service",
+        "lat": 26.932234,
+        "lng": 75.790172
+      },
+      {
+        "name": "Bajaj Jagatpura Service",
+        "lat": 26.93409,
+        "lng": 75.784304
+      },
+      {
+        "name": "Yamaha Jagatpura Service",
+        "lat": 26.899039,
+        "lng": 75.80396
+      }
+    ],
+    "garages": [
+      {
+        "name": "Shell Jagatpura Garage",
+        "lat": 26.896755,
+        "lng": 75.783692
+      },
+      {
+        "name": "Mahindra C-Scheme Garage",
+        "lat": 26.89647,
+        "lng": 75.777451
+      },
+      {
+        "name": "TVS Malviya Nagar Garage",
+        "lat": 26.890702,
+        "lng": 75.771176
+      },
+      {
+        "name": "Mahindra Vaishali Nagar Garage",
+        "lat": 26.924785,
+        "lng": 75.761154
+      },
+      {
+        "name": "Shell C-Scheme Garage",
+        "lat": 26.914957,
+        "lng": 75.782246
+      }
+    ],
+    "fuel_stations": [
+      {
+        "name": "BPCL Mansarovar Fuel Station",
+        "lat": 26.905769,
+        "lng": 75.803488,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "Indian Oil Tonk Road Fuel Station",
+        "lat": 26.905223,
+        "lng": 75.757654,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Shell Mansarovar Fuel Station",
+        "lat": 26.914693,
+        "lng": 75.801378,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "BPCL Mansarovar Fuel Station",
+        "lat": 26.895565,
+        "lng": 75.78345,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "HP Jagatpura Fuel Station",
+        "lat": 26.923149,
+        "lng": 75.781559,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      }
+    ]
+  },
+  {
+    "city": "Nagpur",
+    "latitude": 21.1458,
+    "longitude": 79.0882,
+    "service_centers": [
+      {
+        "name": "Mahindra Sitabuldi Service",
+        "lat": 21.174643,
+        "lng": 79.090247
+      },
+      {
+        "name": "Tata Wardha Road Service",
+        "lat": 21.149664,
+        "lng": 79.059826
+      },
+      {
+        "name": "Tata Sitabuldi Service",
+        "lat": 21.167811,
+        "lng": 79.069104
+      },
+      {
+        "name": "TVS Sadar Service",
+        "lat": 21.135441,
+        "lng": 79.085482
+      },
+      {
+        "name": "Hyundai Sadar Service",
+        "lat": 21.132495,
+        "lng": 79.115272
+      }
+    ],
+    "garages": [
+      {
+        "name": "Shell Manish Nagar Garage",
+        "lat": 21.165895,
+        "lng": 79.086418
+      },
+      {
+        "name": "Mahindra Wardha Road Garage",
+        "lat": 21.118925,
+        "lng": 79.115315
+      },
+      {
+        "name": "Mobil Hudkeshwar Garage",
+        "lat": 21.119917,
+        "lng": 79.115637
+      },
+      {
+        "name": "Castrol Dharampeth Garage",
+        "lat": 21.172777,
+        "lng": 79.070162
+      },
+      {
+        "name": "Castrol Wardha Road Garage",
+        "lat": 21.124943,
+        "lng": 79.065773
+      }
+    ],
+    "fuel_stations": [
+      {
+        "name": "Nayara Dharampeth Fuel Station",
+        "lat": 21.149638,
+        "lng": 79.071278,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "HP Sitabuldi Fuel Station",
+        "lat": 21.152154,
+        "lng": 79.116024,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": false
+        }
+      },
+      {
+        "name": "BPCL Manish Nagar Fuel Station",
+        "lat": 21.122286,
+        "lng": 79.059741,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Nayara Sadar Fuel Station",
+        "lat": 21.139599,
+        "lng": 79.101101,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      },
+      {
+        "name": "Nayara Hudkeshwar Fuel Station",
+        "lat": 21.130371,
+        "lng": 79.100032,
+        "fuels": {
+          "petrol": true,
+          "diesel": true,
+          "cng": true
+        }
+      }
+    ]
+  }
+]
