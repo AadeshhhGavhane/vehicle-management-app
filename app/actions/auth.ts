@@ -64,6 +64,7 @@ export async function updateUserAction(updates: {
   name?: string
   phone?: string
   emailNotificationsEnabled?: boolean
+  phoneNotificationsEnabled?: boolean
 }): Promise<{
   success: boolean
   user?: User

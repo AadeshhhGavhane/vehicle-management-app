@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { User, Phone, Mail, Check, Bell } from "lucide-react"
+import { User, Phone, Mail, Check, Bell, PhoneCall } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 
 export default function ProfilePage() {
@@ -20,6 +20,7 @@ export default function ProfilePage() {
   const [success, setSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [emailNotifications, setEmailNotifications] = useState(user?.emailNotificationsEnabled || false)
+  const [phoneNotifications, setPhoneNotifications] = useState(user?.phoneNotificationsEnabled || false)
 
   const formatPhoneNumber = (value: string) => {
     const digits = value.replace(/\D/g, "").slice(0, 10)
@@ -43,7 +44,12 @@ export default function ProfilePage() {
     }
 
     setIsLoading(true)
-    await updateUser({ name: name.trim(), phone, emailNotificationsEnabled: emailNotifications })
+    await updateUser({
+      name: name.trim(),
+      phone,
+      emailNotificationsEnabled: emailNotifications,
+      phoneNotificationsEnabled: phoneNotifications,
+    })
     setIsLoading(false)
     setSuccess(true)
     setTimeout(() => setSuccess(false), 3000)
@@ -54,11 +60,17 @@ export default function ProfilePage() {
     await updateUser({ emailNotificationsEnabled: enabled })
   }
 
+  const handlePhoneNotificationsToggle = async (enabled: boolean) => {
+    setPhoneNotifications(enabled)
+    await updateUser({ phoneNotificationsEnabled: enabled })
+  }
+
   useEffect(() => {
     if (user) {
       setName(user.name || "")
       setPhone(user.phone || "")
       setEmailNotifications(user.emailNotificationsEnabled || false)
+      setPhoneNotifications(user.phoneNotificationsEnabled || false)
     }
   }, [user])
 
@@ -152,6 +164,23 @@ export default function ProfilePage() {
                   />
                 </div>
                 <p className="text-xs text-muted-foreground">Must be a valid 10-digit Indian phone number</p>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="phone-notifications" className="flex items-center gap-2 cursor-pointer">
+                    <PhoneCall className="h-4 w-4 text-muted-foreground" />
+                    Notify via Phone Call
+                  </Label>
+                  <Switch
+                    id="phone-notifications"
+                    checked={phoneNotifications}
+                    onCheckedChange={handlePhoneNotificationsToggle}
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Receive phone call alerts for warning and critical vehicle health issues
+                </p>
               </div>
 
               <div className="pt-2">

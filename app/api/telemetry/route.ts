@@ -6,8 +6,64 @@ import { broadcastUpdate } from "./stream/route"
 import { TelemetryEmailTemplate } from "@/components/telemetry-email-template"
 import { Resend } from "resend"
 import { render } from "@react-email/render"
+import twilio from "twilio"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
+const twilioClient = process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN
+  ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
+  : null
+
+// Helper function to format phone number to E.164 format
+function formatPhoneNumber(phone: string): string {
+  // Remove all non-digit characters
+  const digits = phone.replace(/\D/g, "")
+  // If it's a 10-digit Indian number, add +91 prefix
+  if (digits.length === 10) {
+    return `+91${digits}`
+  }
+  // If it already starts with +, return as is
+  if (phone.startsWith("+")) {
+    return phone
+  }
+  // Otherwise return with + prefix
+  return `+${digits}`
+}
+
+// Escape XML special characters for TwiML
+function escapeXml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;")
+}
+
+// Generate TwiML message for vehicle issues
+function generateTwiMLMessage(
+  vehicleName: string,
+  vehicleType: string,
+  condition: string,
+  issues: Array<{ name: string; value: number; unit: string }>,
+): string {
+  let message = `Your vehicle ${vehicleName}, a ${vehicleType}, has ${condition === "bad" ? "critical" : "warning"} issues. `
+  
+  if (issues.length > 0) {
+    message += "Issues detected: "
+    const issueList = issues.slice(0, 3).map((issue) => {
+      return `${issue.name} is ${issue.value}${issue.unit}`
+    }).join(", ")
+    message += issueList
+    if (issues.length > 3) {
+      message += ` and ${issues.length - 3} more issue${issues.length - 3 > 1 ? "s" : ""}`
+    }
+    message += ". "
+  }
+  
+  message += "Please take immediate action. Visit your dashboard for more details. Thank you."
+  
+  return escapeXml(message)
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -116,40 +172,72 @@ export async function POST(request: NextRequest) {
       vehicle: updatedVehicle,
     })
 
-    // Send email notification if enabled
+    // Send email and phone notifications if enabled
     try {
       const vehicle = existingVehicle[0]
       const user = await sql`
-        SELECT id, name, email, email_notifications_enabled
+        SELECT id, name, email, phone, email_notifications_enabled, phone_notifications_enabled
         FROM users
         WHERE id = ${vehicle.user_id}
       `
 
-      if (user.length > 0 && user[0].email_notifications_enabled && user[0].email) {
+      if (user.length > 0) {
+        const userData = user[0]
         const conditionOverall = condition.overall || "unknown"
         const vehicleName = vehicle.model || `${vehicle.type}`
         const location = label || updatedHealth.location || "Unknown"
+        const issues = condition.problematicMetrics || []
 
-        const emailHtml = await render(
-          TelemetryEmailTemplate({
-            vehicleName,
-            vehicleType: vehicle.type,
-            condition: conditionOverall,
-            location,
-            issues: condition.problematicMetrics || [],
-          }),
-        )
+        // Send email notification if enabled
+        if (userData.email_notifications_enabled && userData.email) {
+          try {
+            const emailHtml = await render(
+              TelemetryEmailTemplate({
+                vehicleName,
+                vehicleType: vehicle.type,
+                condition: conditionOverall,
+                location,
+                issues,
+              }),
+            )
 
-        await resend.emails.send({
-          from: "VehicleHub <onboarding@resend.dev>",
-          to: [user[0].email],
-          subject: `Vehicle Telemetry Update: ${vehicleName} - ${conditionOverall.toUpperCase()}`,
-          html: emailHtml,
-        })
+            await resend.emails.send({
+              from: "VehicleHub <onboarding@resend.dev>",
+              to: [userData.email],
+              subject: `Vehicle Telemetry Update: ${vehicleName} - ${conditionOverall.toUpperCase()}`,
+              html: emailHtml,
+            })
+          } catch (emailError) {
+            console.error("Failed to send telemetry email notification:", emailError)
+          }
+        }
+
+        // Send phone call notification if enabled and condition is warning or bad
+        if (
+          userData.phone_notifications_enabled &&
+          userData.phone &&
+          (conditionOverall === "warning" || conditionOverall === "bad") &&
+          twilioClient &&
+          process.env.TWILIO_FROM_NUMBER
+        ) {
+          try {
+            const twimlMessage = generateTwiMLMessage(vehicleName, vehicle.type, conditionOverall, issues)
+            const twiml = `<?xml version="1.0" encoding="UTF-8"?><Response><Say>${twimlMessage}</Say></Response>`
+
+            const formattedPhone = formatPhoneNumber(userData.phone)
+            await twilioClient.calls.create({
+              to: formattedPhone,
+              from: process.env.TWILIO_FROM_NUMBER,
+              twiml: twiml,
+            })
+          } catch (callError) {
+            console.error("Failed to send telemetry phone call notification:", callError)
+          }
+        }
       }
-    } catch (emailError) {
-      // Don't fail the telemetry request if email fails
-      console.error("Failed to send telemetry email notification:", emailError)
+    } catch (notificationError) {
+      // Don't fail the telemetry request if notifications fail
+      console.error("Failed to send telemetry notifications:", notificationError)
     }
 
     return NextResponse.json({

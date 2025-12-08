@@ -60,6 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       name: updates.name,
       phone: updates.phone,
       emailNotificationsEnabled: updates.emailNotificationsEnabled,
+      phoneNotificationsEnabled: updates.phoneNotificationsEnabled,
     })
     if (result.success && result.user) {
       setUser(result.user)
