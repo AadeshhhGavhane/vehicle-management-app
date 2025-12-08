@@ -60,7 +60,11 @@ export async function getCurrentUserAction(): Promise<User | null> {
   return getUserById(sessionId)
 }
 
-export async function updateUserAction(updates: { name?: string; phone?: string }): Promise<{
+export async function updateUserAction(updates: {
+  name?: string
+  phone?: string
+  emailNotificationsEnabled?: boolean
+}): Promise<{
   success: boolean
   user?: User
   error?: string

@@ -2,14 +2,15 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAuth } from "@/contexts/auth-context"
 import { validatePhone } from "@/lib/validation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { User, Phone, Mail, Check } from "lucide-react"
+import { User, Phone, Mail, Check, Bell } from "lucide-react"
+import { Switch } from "@/components/ui/switch"
 
 export default function ProfilePage() {
   const { user, updateUser } = useAuth()
@@ -18,6 +19,7 @@ export default function ProfilePage() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [emailNotifications, setEmailNotifications] = useState(user?.emailNotificationsEnabled || false)
 
   const formatPhoneNumber = (value: string) => {
     const digits = value.replace(/\D/g, "").slice(0, 10)
@@ -41,11 +43,24 @@ export default function ProfilePage() {
     }
 
     setIsLoading(true)
-    updateUser({ name: name.trim(), phone })
+    await updateUser({ name: name.trim(), phone, emailNotificationsEnabled: emailNotifications })
     setIsLoading(false)
     setSuccess(true)
     setTimeout(() => setSuccess(false), 3000)
   }
+
+  const handleEmailNotificationsToggle = async (enabled: boolean) => {
+    setEmailNotifications(enabled)
+    await updateUser({ emailNotificationsEnabled: enabled })
+  }
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name || "")
+      setPhone(user.phone || "")
+      setEmailNotifications(user.emailNotificationsEnabled || false)
+    }
+  }, [user])
 
   return (
     <div className="space-y-8">
@@ -99,6 +114,23 @@ export default function ProfilePage() {
                 </Label>
                 <Input id="email" type="email" value={user?.email || ""} disabled className="bg-muted" />
                 <p className="text-xs text-muted-foreground">Email cannot be changed</p>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="email-notifications" className="flex items-center gap-2 cursor-pointer">
+                    <Bell className="h-4 w-4 text-muted-foreground" />
+                    Notify via Email
+                  </Label>
+                  <Switch
+                    id="email-notifications"
+                    checked={emailNotifications}
+                    onCheckedChange={handleEmailNotificationsToggle}
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Receive email notifications when telemetry events are received for your vehicles
+                </p>
               </div>
 
               <div className="space-y-2">

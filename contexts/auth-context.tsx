@@ -56,7 +56,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const updateUser = async (updates: Partial<User>) => {
-    const result = await updateUserAction({ name: updates.name, phone: updates.phone })
+    const result = await updateUserAction({
+      name: updates.name,
+      phone: updates.phone,
+      emailNotificationsEnabled: updates.emailNotificationsEnabled,
+    })
     if (result.success && result.user) {
       setUser(result.user)
     }

@@ -3,6 +3,11 @@ import { evaluateVehicleCondition } from "@/lib/vehicle-health"
 import type { VehicleHealth } from "@/lib/types"
 import { type NextRequest, NextResponse } from "next/server"
 import { broadcastUpdate } from "./stream/route"
+import { TelemetryEmailTemplate } from "@/components/telemetry-email-template"
+import { Resend } from "resend"
+import { render } from "@react-email/render"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,7 +21,7 @@ export async function POST(request: NextRequest) {
 
     // Check if vehicle exists
     const existingVehicle = await sql`
-      SELECT id, type, health FROM vehicles WHERE unique_code = ${code}
+      SELECT id, type, health, user_id, model FROM vehicles WHERE unique_code = ${code}
     `
 
     if (existingVehicle.length === 0) {
@@ -110,6 +115,42 @@ export async function POST(request: NextRequest) {
       type: "vehicle_updated",
       vehicle: updatedVehicle,
     })
+
+    // Send email notification if enabled
+    try {
+      const vehicle = existingVehicle[0]
+      const user = await sql`
+        SELECT id, name, email, email_notifications_enabled
+        FROM users
+        WHERE id = ${vehicle.user_id}
+      `
+
+      if (user.length > 0 && user[0].email_notifications_enabled && user[0].email) {
+        const conditionOverall = condition.overall || "unknown"
+        const vehicleName = vehicle.model || `${vehicle.type}`
+        const location = label || updatedHealth.location || "Unknown"
+
+        const emailHtml = await render(
+          TelemetryEmailTemplate({
+            vehicleName,
+            vehicleType: vehicle.type,
+            condition: conditionOverall,
+            location,
+            issues: condition.problematicMetrics || [],
+          }),
+        )
+
+        await resend.emails.send({
+          from: "VehicleHub <onboarding@resend.dev>",
+          to: [user[0].email],
+          subject: `Vehicle Telemetry Update: ${vehicleName} - ${conditionOverall.toUpperCase()}`,
+          html: emailHtml,
+        })
+      }
+    } catch (emailError) {
+      // Don't fail the telemetry request if email fails
+      console.error("Failed to send telemetry email notification:", emailError)
+    }
 
     return NextResponse.json({
       success: true,

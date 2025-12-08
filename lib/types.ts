@@ -4,6 +4,7 @@ export interface User {
   phone: string
   email: string
   password: string
+  emailNotificationsEnabled?: boolean
 }
 
 export interface Vehicle {
