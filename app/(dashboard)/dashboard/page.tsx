@@ -8,6 +8,7 @@ import { getVehiclesAction } from "@/app/actions/vehicles"
 import type { Vehicle } from "@/lib/types"
 import { VehicleDashboardCard } from "@/components/dashboard/vehicle-dashboard-card"
 import { VehicleHealthModal } from "@/components/dashboard/vehicle-health-modal"
+import { AIChatWidget } from "@/components/dashboard/ai-chat-widget"
 import { Car, Bike, Zap } from "lucide-react"
 
 export default function DashboardPage() {
@@ -114,6 +115,8 @@ export default function DashboardPage() {
       </div>
 
       <VehicleHealthModal vehicle={selectedVehicle} onClose={() => setSelectedVehicle(null)} />
+      
+      <AIChatWidget />
     </div>
   )
 }
