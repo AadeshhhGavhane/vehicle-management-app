@@ -1,4 +1,5 @@
 import type { VehicleHealth, ConditionResult, ConditionStatus } from "./types"
+import { THRESHOLDS } from "./telemetry-types"
 
 interface MetricEvaluation {
   name: string
@@ -35,13 +36,75 @@ function evaluateFuelLevel(level: number): MetricEvaluation {
   return { name: "Fuel Level", value: level, status, unit: "%" }
 }
 
+function evaluateHealthMetric(value: number, thresholds: { good: number; average: number }, inverted = false): ConditionStatus {
+  if (inverted) {
+    // For metrics where lower is better (like engine temp)
+    if (value <= thresholds.good) return "good"
+    if (value <= thresholds.average) return "warning"
+    return "bad"
+  } else {
+    // For metrics where higher is better
+    if (value >= thresholds.good) return "good"
+    if (value >= thresholds.average) return "warning"
+    return "bad"
+  }
+}
+
 export function evaluateVehicleCondition(health: VehicleHealth): ConditionResult {
   const metrics: MetricEvaluation[] = []
 
+  // Common metrics
   if (typeof health.engineTemperature === "number") metrics.push(evaluateEngineTemperature(health.engineTemperature))
   if (typeof health.batteryLevel === "number") metrics.push(evaluateBatteryLevel(health.batteryLevel))
   if (typeof health.tirePressure === "number") metrics.push(evaluateTirePressure(health.tirePressure))
   if (typeof health.fuelLevel === "number") metrics.push(evaluateFuelLevel(health.fuelLevel))
+
+  // Vehicle-specific metrics from telemetry
+  const telemetry = health.telemetry || {}
+
+  // Car-specific metrics
+  if (typeof telemetry.carEngineHealth === "number") {
+    const status = evaluateHealthMetric(telemetry.carEngineHealth, THRESHOLDS.carEngineHealth)
+    metrics.push({ name: "Car Engine Health", value: telemetry.carEngineHealth, status, unit: "%" })
+  }
+
+  // Bike-specific metrics
+  if (typeof telemetry.bikeEngineHealth === "number") {
+    const status = evaluateHealthMetric(telemetry.bikeEngineHealth, THRESHOLDS.bikeEngineHealth)
+    metrics.push({ name: "Bike Engine Health", value: telemetry.bikeEngineHealth, status, unit: "%" })
+  }
+  if (typeof telemetry.bikeChainHealth === "number") {
+    const status = evaluateHealthMetric(telemetry.bikeChainHealth, THRESHOLDS.bikeChainHealth)
+    metrics.push({ name: "Bike Chain Health", value: telemetry.bikeChainHealth, status, unit: "%" })
+  }
+
+  // Scooter-specific metrics
+  if (typeof telemetry.scooterBatteryHealth === "number") {
+    const status = evaluateHealthMetric(telemetry.scooterBatteryHealth, THRESHOLDS.scooterBatteryHealth)
+    metrics.push({ name: "Scooter Battery Health", value: telemetry.scooterBatteryHealth, status, unit: "%" })
+  }
+  if (typeof telemetry.scooterStateOfChargePercent === "number") {
+    const status = evaluateHealthMetric(telemetry.scooterStateOfChargePercent, THRESHOLDS.scooterStateOfChargePercent)
+    metrics.push({ name: "Scooter State of Charge", value: telemetry.scooterStateOfChargePercent, status, unit: "%" })
+  }
+  if (typeof telemetry.scooterEngineHealth === "number") {
+    const status = evaluateHealthMetric(telemetry.scooterEngineHealth, THRESHOLDS.scooterEngineHealth)
+    metrics.push({ name: "Scooter Engine Health", value: telemetry.scooterEngineHealth, status, unit: "%" })
+  }
+
+  // Additional health metrics (batteryHealth, tyreHealth, brakeHealth from telemetry)
+  if (typeof telemetry.batteryHealth === "number" && !metrics.find((m) => m.name === "Battery Level")) {
+    const status = evaluateHealthMetric(telemetry.batteryHealth, THRESHOLDS.batteryHealth)
+    metrics.push({ name: "Battery Health", value: telemetry.batteryHealth, status, unit: "%" })
+  }
+  if (typeof telemetry.tyreHealth === "number") {
+    const status = evaluateHealthMetric(telemetry.tyreHealth, THRESHOLDS.tyreHealth)
+    metrics.push({ name: "Tyre Health", value: telemetry.tyreHealth, status, unit: "%" })
+  }
+  if (typeof telemetry.brakeHealth === "number") {
+    const status = evaluateHealthMetric(telemetry.brakeHealth, THRESHOLDS.brakeHealth)
+    metrics.push({ name: "Brake Health", value: telemetry.brakeHealth, status, unit: "%" })
+  }
 
   const problematicMetrics = metrics.filter((m) => m.status !== "good")
 

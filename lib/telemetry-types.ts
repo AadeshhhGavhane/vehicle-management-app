@@ -22,12 +22,14 @@ export interface TelemetryPayload {
   bikeEngineHealth?: number
   bikeFuelLevelPercent?: number
   bikeChainHealth?: number
+  bikeEngineTempC?: number
   // Scooter specific
   scooterBatteryHealth?: number
   scooterStateOfChargePercent?: number
   scooterRangeKm?: number
   scooterEngineHealth?: number
   scooterFuelLevelPercent?: number
+  scooterEngineTempC?: number
 }
 
 export type VehicleType = "car" | "bike" | "scooter"
@@ -119,6 +121,7 @@ export const PRESETS: Record<VehicleType, Record<Exclude<PresetType, "manual">, 
       bikeEngineHealth: 95,
       bikeFuelLevelPercent: 85,
       bikeChainHealth: 90,
+      bikeEngineTempC: 70,
     },
     average: {
       batteryHealth: 55,
@@ -128,6 +131,7 @@ export const PRESETS: Record<VehicleType, Record<Exclude<PresetType, "manual">, 
       bikeEngineHealth: 55,
       bikeFuelLevelPercent: 35,
       bikeChainHealth: 50,
+      bikeEngineTempC: 90,
     },
     bad: {
       batteryHealth: 25,
@@ -137,6 +141,7 @@ export const PRESETS: Record<VehicleType, Record<Exclude<PresetType, "manual">, 
       bikeEngineHealth: 25,
       bikeFuelLevelPercent: 10,
       bikeChainHealth: 20,
+      bikeEngineTempC: 110,
     },
   },
   scooter: {
@@ -150,6 +155,7 @@ export const PRESETS: Record<VehicleType, Record<Exclude<PresetType, "manual">, 
       scooterRangeKm: 80,
       scooterEngineHealth: 95,
       scooterFuelLevelPercent: 85,
+      scooterEngineTempC: 70,
     },
     average: {
       batteryHealth: 55,
@@ -161,6 +167,7 @@ export const PRESETS: Record<VehicleType, Record<Exclude<PresetType, "manual">, 
       scooterRangeKm: 35,
       scooterEngineHealth: 55,
       scooterFuelLevelPercent: 35,
+      scooterEngineTempC: 90,
     },
     bad: {
       batteryHealth: 25,
@@ -172,6 +179,7 @@ export const PRESETS: Record<VehicleType, Record<Exclude<PresetType, "manual">, 
       scooterRangeKm: 15,
       scooterEngineHealth: 25,
       scooterFuelLevelPercent: 10,
+      scooterEngineTempC: 110,
     },
   },
 }

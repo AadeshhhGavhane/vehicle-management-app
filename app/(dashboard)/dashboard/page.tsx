@@ -26,6 +26,43 @@ export default function DashboardPage() {
       }
     }
     loadVehicles()
+
+    // Connect to SSE for real-time updates
+    if (user) {
+      const eventSource = new EventSource("/api/telemetry/stream")
+
+      eventSource.onmessage = async (event) => {
+        try {
+          const data = JSON.parse(event.data)
+          
+          if (data.type === "vehicle_updated") {
+            // Reload vehicles to get the latest data
+            const updatedVehicles = await getVehiclesAction()
+            setVehicles(updatedVehicles)
+            
+            // Update selected vehicle if it's the one that was updated
+            setSelectedVehicle((prevSelected) => {
+              if (prevSelected && prevSelected.id === data.vehicle.id) {
+                const updatedVehicle = updatedVehicles.find((v) => v.id === data.vehicle.id)
+                return updatedVehicle || prevSelected
+              }
+              return prevSelected
+            })
+          }
+        } catch (error) {
+          console.error("Error processing SSE message:", error)
+        }
+      }
+
+      eventSource.onerror = (error) => {
+        console.error("SSE connection error:", error)
+        // EventSource will automatically reconnect
+      }
+
+      return () => {
+        eventSource.close()
+      }
+    }
   }, [user])
 
   const stats = {

@@ -60,6 +60,7 @@ export default function MockVehiclePage() {
   const [bikeEngineHealth, setBikeEngineHealth] = useState(75)
   const [bikeFuelLevelPercent, setBikeFuelLevelPercent] = useState(60)
   const [bikeChainHealth, setBikeChainHealth] = useState(75)
+  const [bikeEngineTempC, setBikeEngineTempC] = useState(70)
 
   // Scooter specific
   const [scooterBatteryHealth, setScooterBatteryHealth] = useState(75)
@@ -67,6 +68,7 @@ export default function MockVehiclePage() {
   const [scooterRangeKm, setScooterRangeKm] = useState(50)
   const [scooterEngineHealth, setScooterEngineHealth] = useState(75)
   const [scooterFuelLevelPercent, setScooterFuelLevelPercent] = useState(60)
+  const [scooterEngineTempC, setScooterEngineTempC] = useState(70)
 
   // Response state
   const [response, setResponse] = useState<any>(null)
@@ -103,6 +105,7 @@ export default function MockVehiclePage() {
         if (presetValues.bikeEngineHealth !== undefined) setBikeEngineHealth(presetValues.bikeEngineHealth)
         if (presetValues.bikeFuelLevelPercent !== undefined) setBikeFuelLevelPercent(presetValues.bikeFuelLevelPercent)
         if (presetValues.bikeChainHealth !== undefined) setBikeChainHealth(presetValues.bikeChainHealth)
+        if (presetValues.bikeEngineTempC !== undefined) setBikeEngineTempC(presetValues.bikeEngineTempC)
       } else if (vehicleType === "scooter") {
         if (presetValues.scooterBatteryHealth !== undefined) setScooterBatteryHealth(presetValues.scooterBatteryHealth)
         if (presetValues.scooterStateOfChargePercent !== undefined)
@@ -111,6 +114,7 @@ export default function MockVehiclePage() {
         if (presetValues.scooterEngineHealth !== undefined) setScooterEngineHealth(presetValues.scooterEngineHealth)
         if (presetValues.scooterFuelLevelPercent !== undefined)
           setScooterFuelLevelPercent(presetValues.scooterFuelLevelPercent)
+        if (presetValues.scooterEngineTempC !== undefined) setScooterEngineTempC(presetValues.scooterEngineTempC)
       }
     }
   }, [preset, vehicleType])
@@ -155,11 +159,13 @@ export default function MockVehiclePage() {
         setBikeEngineHealth(telemetry.bikeEngineHealth ?? 75)
         setBikeFuelLevelPercent(telemetry.bikeFuelLevelPercent ?? 60)
         setBikeChainHealth(telemetry.bikeChainHealth ?? 75)
+        setBikeEngineTempC(telemetry.bikeEngineTempC ?? 70)
         setScooterBatteryHealth(telemetry.scooterBatteryHealth ?? 75)
         setScooterStateOfChargePercent(telemetry.scooterStateOfChargePercent ?? 60)
         setScooterRangeKm(telemetry.scooterRangeKm ?? 50)
         setScooterEngineHealth(telemetry.scooterEngineHealth ?? 75)
         setScooterFuelLevelPercent(telemetry.scooterFuelLevelPercent ?? 60)
+        setScooterEngineTempC(telemetry.scooterEngineTempC ?? 70)
       } catch (err) {
         if (controller.signal.aborted) return
         console.error("Failed to load vehicle state", err)
@@ -223,12 +229,14 @@ export default function MockVehiclePage() {
       payload.bikeEngineHealth = bikeEngineHealth
       payload.bikeFuelLevelPercent = bikeFuelLevelPercent
       payload.bikeChainHealth = bikeChainHealth
+      payload.bikeEngineTempC = bikeEngineTempC
     } else if (vehicleType === "scooter") {
       payload.scooterBatteryHealth = scooterBatteryHealth
       payload.scooterStateOfChargePercent = scooterStateOfChargePercent
       payload.scooterRangeKm = scooterRangeKm
       payload.scooterEngineHealth = scooterEngineHealth
       payload.scooterFuelLevelPercent = scooterFuelLevelPercent
+      payload.scooterEngineTempC = scooterEngineTempC
     }
 
     // Filter out non-finite numbers
@@ -293,11 +301,13 @@ export default function MockVehiclePage() {
     setBikeEngineHealth(75)
     setBikeFuelLevelPercent(60)
     setBikeChainHealth(75)
+    setBikeEngineTempC(70)
     setScooterBatteryHealth(75)
     setScooterStateOfChargePercent(60)
     setScooterRangeKm(50)
     setScooterEngineHealth(75)
     setScooterFuelLevelPercent(60)
+    setScooterEngineTempC(70)
     setResponse(null)
     setError("")
   }
@@ -638,6 +648,14 @@ export default function MockVehiclePage() {
                     metricKey="bikeChainHealth"
                     unit="%"
                   />
+                  <HealthInput
+                    label="Engine Temperature"
+                    value={bikeEngineTempC}
+                    onChange={setBikeEngineTempC}
+                    metricKey="carEngineTempC"
+                    unit="°C"
+                    max={150}
+                  />
                 </CardContent>
               </Card>
             )}
@@ -683,6 +701,14 @@ export default function MockVehiclePage() {
                     onChange={setScooterFuelLevelPercent}
                     metricKey="scooterFuelLevelPercent"
                     unit="%"
+                  />
+                  <HealthInput
+                    label="Engine Temperature"
+                    value={scooterEngineTempC}
+                    onChange={setScooterEngineTempC}
+                    metricKey="carEngineTempC"
+                    unit="°C"
+                    max={150}
                   />
                 </CardContent>
               </Card>

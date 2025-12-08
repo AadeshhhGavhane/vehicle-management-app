@@ -2,6 +2,7 @@ import { sql } from "@/lib/db"
 import { evaluateVehicleCondition } from "@/lib/vehicle-health"
 import type { VehicleHealth } from "@/lib/types"
 import { type NextRequest, NextResponse } from "next/server"
+import { broadcastUpdate } from "./stream/route"
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,6 +32,16 @@ export async function POST(request: NextRequest) {
         ? existingHealth.tirePressure
         : 30 + (Math.min(Math.max(healthMetrics.tyreHealth, 0), 100) / 100) * 5
 
+    // Determine engine temperature based on vehicle type
+    let engineTemp: number | undefined
+    if (vehicle.type === "car") {
+      engineTemp = healthMetrics.carEngineTempC ?? existingHealth.engineTemperature
+    } else if (vehicle.type === "bike") {
+      engineTemp = healthMetrics.bikeEngineTempC ?? existingHealth.engineTemperature ?? 70
+    } else if (vehicle.type === "scooter") {
+      engineTemp = healthMetrics.scooterEngineTempC ?? existingHealth.engineTemperature ?? 70
+    }
+
     const updatedHealth: VehicleHealth = {
       ...existingHealth,
       ...healthMetrics,
@@ -42,7 +53,7 @@ export async function POST(request: NextRequest) {
         healthMetrics.bikeFuelLevelPercent ??
         healthMetrics.scooterFuelLevelPercent ??
         existingHealth.fuelLevel,
-      engineTemperature: healthMetrics.carEngineTempC ?? existingHealth.engineTemperature,
+      engineTemperature: engineTemp,
       mileage: healthMetrics.odometerKm ?? existingHealth.mileage,
       isActive: status === "on",
       location: label || existingHealth.location,
@@ -76,20 +87,28 @@ export async function POST(request: NextRequest) {
       RETURNING id, unique_code, type, status, lat, lng, label, health, last_telemetry_at
     `
 
+    const updatedVehicle = {
+      id: result[0].id,
+      code: result[0].unique_code,
+      type: result[0].type,
+      status: result[0].status,
+      lat: result[0].lat,
+      lng: result[0].lng,
+      label: result[0].label,
+      health: result[0].health,
+      lastTelemetryAt: result[0].last_telemetry_at,
+    }
+
+    // Broadcast update to all connected SSE clients
+    broadcastUpdate({
+      type: "vehicle_updated",
+      vehicle: updatedVehicle,
+    })
+
     return NextResponse.json({
       success: true,
       message: "Telemetry received successfully",
-      vehicle: {
-        id: result[0].id,
-        code: result[0].unique_code,
-        type: result[0].type,
-        status: result[0].status,
-        lat: result[0].lat,
-        lng: result[0].lng,
-        label: result[0].label,
-        health: result[0].health,
-        lastTelemetryAt: result[0].last_telemetry_at,
-      },
+      vehicle: updatedVehicle,
     })
   } catch (error) {
     console.error("Telemetry error:", error)
