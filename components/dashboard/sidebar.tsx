@@ -22,13 +22,13 @@ export function Sidebar() {
   const { user, logout } = useAuth()
 
   return (
-    <aside className="flex h-screen w-64 flex-col border-r border-border bg-sidebar">
-      <div className="flex h-16 items-center gap-2 border-b border-sidebar-border px-6">
+    <aside className="flex h-full w-64 flex-col border-r border-border bg-sidebar shrink-0">
+      <div className="flex h-16 items-center gap-2 border-b border-sidebar-border px-6 shrink-0">
         <Car className="h-6 w-6 text-sidebar-foreground" />
         <span className="text-lg font-semibold text-sidebar-foreground tracking-tight">VehicleHub</span>
       </div>
 
-      <nav className="flex-1 space-y-1 p-4">
+      <nav className="flex-1 space-y-1 p-4 overflow-y-auto min-h-0">
         {navItems.map((item) => {
           const isActive = pathname === item.href
           return (
@@ -49,7 +49,7 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="border-t border-sidebar-border p-4">
+      <div className="border-t border-sidebar-border p-4 shrink-0">
         <div className="flex items-center justify-between mb-3">
           <button
             type="button"

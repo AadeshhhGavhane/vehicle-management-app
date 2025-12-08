@@ -61,6 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       phone: updates.phone,
       emailNotificationsEnabled: updates.emailNotificationsEnabled,
       phoneNotificationsEnabled: updates.phoneNotificationsEnabled,
+      whatsappNotificationsEnabled: updates.whatsappNotificationsEnabled,
     })
     if (result.success && result.user) {
       setUser(result.user)

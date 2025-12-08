@@ -37,6 +37,7 @@
         "@react-email/render": "^2.0.0",
         "@vercel/analytics": "latest",
         "autoprefixer": "^10.4.20",
+        "axios": "^1.13.2",
         "bcryptjs": "latest",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",

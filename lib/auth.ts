@@ -22,7 +22,7 @@ export async function createUser(
     const result = await sql`
       INSERT INTO users (name, email, phone, password_hash)
       VALUES (${name}, ${email}, ${phone}, ${passwordHash})
-      RETURNING id, name, email, phone, email_notifications_enabled, phone_notifications_enabled
+      RETURNING id, name, email, phone, email_notifications_enabled, phone_notifications_enabled, whatsapp_notifications_enabled
     `
 
     const user: User = {
@@ -33,6 +33,7 @@ export async function createUser(
       password: "", // Don't return password
       emailNotificationsEnabled: result[0].email_notifications_enabled || false,
       phoneNotificationsEnabled: result[0].phone_notifications_enabled || false,
+      whatsappNotificationsEnabled: result[0].whatsapp_notifications_enabled || false,
     }
 
     return { success: true, user }
@@ -48,7 +49,7 @@ export async function verifyUser(
 ): Promise<{ success: boolean; user?: User; error?: string }> {
   try {
     const result = await sql`
-      SELECT id, name, email, phone, password_hash, email_notifications_enabled, phone_notifications_enabled
+      SELECT id, name, email, phone, password_hash, email_notifications_enabled, phone_notifications_enabled, whatsapp_notifications_enabled
       FROM users
       WHERE LOWER(email) = LOWER(${email})
     `
@@ -70,6 +71,7 @@ export async function verifyUser(
       password: "",
       emailNotificationsEnabled: result[0].email_notifications_enabled || false,
       phoneNotificationsEnabled: result[0].phone_notifications_enabled || false,
+      whatsappNotificationsEnabled: result[0].whatsapp_notifications_enabled || false,
     }
 
     return { success: true, user }
@@ -82,7 +84,7 @@ export async function verifyUser(
 export async function getUserById(id: string): Promise<User | null> {
   try {
     const result = await sql`
-      SELECT id, name, email, phone, email_notifications_enabled, phone_notifications_enabled
+      SELECT id, name, email, phone, email_notifications_enabled, phone_notifications_enabled, whatsapp_notifications_enabled
       FROM users
       WHERE id = ${id}
     `
@@ -97,6 +99,7 @@ export async function getUserById(id: string): Promise<User | null> {
       password: "",
       emailNotificationsEnabled: result[0].email_notifications_enabled || false,
       phoneNotificationsEnabled: result[0].phone_notifications_enabled || false,
+      whatsappNotificationsEnabled: result[0].whatsapp_notifications_enabled || false,
     }
   } catch (error) {
     console.error("Error getting user:", error)
@@ -111,6 +114,7 @@ export async function updateUser(
     phone?: string
     emailNotificationsEnabled?: boolean
     phoneNotificationsEnabled?: boolean
+    whatsappNotificationsEnabled?: boolean
   },
 ): Promise<User | null> {
   try {
@@ -121,9 +125,10 @@ export async function updateUser(
         phone = COALESCE(${updates.phone}, phone),
         email_notifications_enabled = COALESCE(${updates.emailNotificationsEnabled}, email_notifications_enabled),
         phone_notifications_enabled = COALESCE(${updates.phoneNotificationsEnabled}, phone_notifications_enabled),
+        whatsapp_notifications_enabled = COALESCE(${updates.whatsappNotificationsEnabled}, whatsapp_notifications_enabled),
         updated_at = NOW()
       WHERE id = ${id}
-      RETURNING id, name, email, phone, email_notifications_enabled, phone_notifications_enabled
+      RETURNING id, name, email, phone, email_notifications_enabled, phone_notifications_enabled, whatsapp_notifications_enabled
     `
 
     if (result.length === 0) return null
@@ -136,6 +141,7 @@ export async function updateUser(
       password: "",
       emailNotificationsEnabled: result[0].email_notifications_enabled || false,
       phoneNotificationsEnabled: result[0].phone_notifications_enabled || false,
+      whatsappNotificationsEnabled: result[0].whatsapp_notifications_enabled || false,
     }
   } catch (error) {
     console.error("Error updating user:", error)

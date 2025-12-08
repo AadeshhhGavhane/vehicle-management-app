@@ -7,13 +7,14 @@ import { TelemetryEmailTemplate } from "@/components/telemetry-email-template"
 import { Resend } from "resend"
 import { render } from "@react-email/render"
 import twilio from "twilio"
+import axios from "axios"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const twilioClient = process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN
   ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
   : null
 
-// Helper function to format phone number to E.164 format
+// Helper function to format phone number to E.164 format (for Twilio)
 function formatPhoneNumber(phone: string): string {
   // Remove all non-digit characters
   const digits = phone.replace(/\D/g, "")
@@ -27,6 +28,58 @@ function formatPhoneNumber(phone: string): string {
   }
   // Otherwise return with + prefix
   return `+${digits}`
+}
+
+// Helper function to format phone number for WhatsApp (country code + number, no "+")
+function formatPhoneNumberForWhatsApp(phone: string): string {
+  // Remove all non-digit characters
+  const digits = phone.replace(/\D/g, "")
+  // If it's a 10-digit Indian number, add 91 prefix
+  if (digits.length === 10) {
+    return `91${digits}`
+  }
+  // If it starts with +, remove it
+  if (phone.startsWith("+")) {
+    return digits
+  }
+  // Otherwise return digits as is
+  return digits
+}
+
+// Generate WhatsApp message from email template content
+function generateWhatsAppMessage(
+  vehicleName: string,
+  vehicleType: string,
+  condition: string,
+  location: string,
+  issues: Array<{ name: string; value: number; unit: string; status: string }>,
+): string {
+  const getConditionEmoji = (cond: string) => {
+    if (cond === "good") return "✅"
+    if (cond === "warning") return "⚠️"
+    if (cond === "bad") return "❌"
+    return "ℹ️"
+  }
+
+  let message = `🚗 *Vehicle Telemetry Update*\n\n`
+  message += `*${vehicleName}*\n`
+  message += `Type: ${vehicleType}\n`
+  message += `Location: ${location}\n`
+  message += `Overall Condition: ${getConditionEmoji(condition)} ${condition.toUpperCase()}\n\n`
+
+  if (issues.length > 0) {
+    message += `⚠️ *Issues Detected:*\n`
+    issues.forEach((issue) => {
+      message += `• ${issue.name}: ${issue.value}${issue.unit} (${issue.status})\n`
+    })
+    message += `\n`
+  } else {
+    message += `✅ No issues detected - Your vehicle is in good condition!\n\n`
+  }
+
+  message += `This is an automated notification from your Vehicle Management App. You can view more details in your dashboard.`
+
+  return message
 }
 
 // Escape XML special characters for TwiML
@@ -176,7 +229,7 @@ export async function POST(request: NextRequest) {
     try {
       const vehicle = existingVehicle[0]
       const user = await sql`
-        SELECT id, name, email, phone, email_notifications_enabled, phone_notifications_enabled
+        SELECT id, name, email, phone, email_notifications_enabled, phone_notifications_enabled, whatsapp_notifications_enabled
         FROM users
         WHERE id = ${vehicle.user_id}
       `
@@ -232,6 +285,45 @@ export async function POST(request: NextRequest) {
             })
           } catch (callError) {
             console.error("Failed to send telemetry phone call notification:", callError)
+          }
+        }
+
+        // Send WhatsApp notification if enabled (for all conditions like email)
+        if (
+          userData.whatsapp_notifications_enabled &&
+          userData.phone &&
+          process.env.WHAPI_TOKEN
+        ) {
+          try {
+            const whatsappMessage = generateWhatsAppMessage(
+              vehicleName,
+              vehicle.type,
+              conditionOverall,
+              location,
+              issues,
+            )
+
+            const formattedPhone = formatPhoneNumberForWhatsApp(userData.phone)
+
+            await axios.post(
+              "https://gate.whapi.cloud/messages/text",
+              {
+                to: formattedPhone,
+                body: whatsappMessage,
+              },
+              {
+                headers: {
+                  accept: "application/json",
+                  "Content-Type": "application/json",
+                  authorization: `Bearer ${process.env.WHAPI_TOKEN}`,
+                },
+              },
+            )
+          } catch (whatsappError) {
+            console.error(
+              "Failed to send telemetry WhatsApp notification:",
+              whatsappError.response?.data || whatsappError.message,
+            )
           }
         }
       }

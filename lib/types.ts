@@ -6,6 +6,7 @@ export interface User {
   password: string
   emailNotificationsEnabled?: boolean
   phoneNotificationsEnabled?: boolean
+  whatsappNotificationsEnabled?: boolean
 }
 
 export interface Vehicle {

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { User, Phone, Mail, Check, Bell, PhoneCall } from "lucide-react"
+import { User, Phone, Mail, Check, Bell, PhoneCall, MessageSquare } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 
 export default function ProfilePage() {
@@ -21,6 +21,7 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(false)
   const [emailNotifications, setEmailNotifications] = useState(user?.emailNotificationsEnabled || false)
   const [phoneNotifications, setPhoneNotifications] = useState(user?.phoneNotificationsEnabled || false)
+  const [whatsappNotifications, setWhatsappNotifications] = useState(user?.whatsappNotificationsEnabled || false)
 
   const formatPhoneNumber = (value: string) => {
     const digits = value.replace(/\D/g, "").slice(0, 10)
@@ -49,6 +50,7 @@ export default function ProfilePage() {
       phone,
       emailNotificationsEnabled: emailNotifications,
       phoneNotificationsEnabled: phoneNotifications,
+      whatsappNotificationsEnabled: whatsappNotifications,
     })
     setIsLoading(false)
     setSuccess(true)
@@ -65,12 +67,18 @@ export default function ProfilePage() {
     await updateUser({ phoneNotificationsEnabled: enabled })
   }
 
+  const handleWhatsappNotificationsToggle = async (enabled: boolean) => {
+    setWhatsappNotifications(enabled)
+    await updateUser({ whatsappNotificationsEnabled: enabled })
+  }
+
   useEffect(() => {
     if (user) {
       setName(user.name || "")
       setPhone(user.phone || "")
       setEmailNotifications(user.emailNotificationsEnabled || false)
       setPhoneNotifications(user.phoneNotificationsEnabled || false)
+      setWhatsappNotifications(user.whatsappNotificationsEnabled || false)
     }
   }, [user])
 
@@ -180,6 +188,29 @@ export default function ProfilePage() {
                 </div>
                 <p className="text-xs text-muted-foreground">
                   Receive phone call alerts for warning and critical vehicle health issues
+                </p>
+                <p className="text-xs text-yellow-600 dark:text-yellow-500 font-medium">
+                  ⚠️ Experimental feature: This is working due to generous free tier limits and may have usage restrictions.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="whatsapp-notifications" className="flex items-center gap-2 cursor-pointer">
+                    <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                    Notify via WhatsApp
+                  </Label>
+                  <Switch
+                    id="whatsapp-notifications"
+                    checked={whatsappNotifications}
+                    onCheckedChange={handleWhatsappNotificationsToggle}
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Receive WhatsApp messages when telemetry events are received for your vehicles
+                </p>
+                <p className="text-xs text-yellow-600 dark:text-yellow-500 font-medium">
+                  ⚠️ Experimental feature: This is working due to generous free tier limits and may have usage restrictions.
                 </p>
               </div>
 

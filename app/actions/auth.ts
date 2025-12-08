@@ -65,6 +65,7 @@ export async function updateUserAction(updates: {
   phone?: string
   emailNotificationsEnabled?: boolean
   phoneNotificationsEnabled?: boolean
+  whatsappNotificationsEnabled?: boolean
 }): Promise<{
   success: boolean
   user?: User
